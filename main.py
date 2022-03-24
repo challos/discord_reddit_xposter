@@ -142,7 +142,7 @@ def main(
             time_passed = int(
                 (datetime.timestamp(datetime.now()) - submission.created_utc) / 60
             )
-            if wait_period > 5:
+            if time_passed > wait_period:
                 try:
                     x_poster.post_submission(submission, reddit.config.reddit_url)
                 except RuntimeError as e:
