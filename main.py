@@ -136,7 +136,16 @@ def main(
     """
     subreddit = reddit.subreddit(subreddit_name)
     # get in reverse order to post oldest to newest
-    submissions = [submission for submission in subreddit.new(limit=post_limit)][::-1]
+    try:
+        submissions = [submission for submission in subreddit.new(limit=post_limit)][::-1]
+    except prawcore.exceptions.RequestException:
+        #just restart the loop, will probably fix itself
+        return x_poster
+    except prawcore.exceptions.ServerError:
+        return x_poster
+    except prawcore.exceptions.RequestException:
+        return x_poster
+
     for submission in submissions:
         if not submission.removal_reason and submission.id not in x_poster.cache:
             time_passed = int(
