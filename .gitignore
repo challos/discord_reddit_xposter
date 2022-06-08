@@ -2,3 +2,5 @@
 praw.ini
 cache.txt
 xposter.ini
+config.ini
+database.db
