@@ -4,7 +4,6 @@ import praw
 import prawcore
 from discord import SyncWebhook
 from urllib.parse import urljoin
-import os
 import requests
 from datetime import datetime
 import time
@@ -50,7 +49,13 @@ class RESTCache:
     def need_token(f):
         @wraps(f)
         def decorator(self, *args, **kwargs):
-            token = self._login()
+            login_url = urljoin(self.url, "users/login")
+            resp = requests.get(login_url, auth=(self.username, self.password))
+            if resp.status_code > 299:
+                print("Error with logging in!")
+                exit()
+
+            token = resp.json()["token"]
             self.token_header = {"Authorization": "Bearer {}".format(token)}
             func = f(self, *args, **kwargs)
             # unset so it is retrieved again
@@ -58,11 +63,6 @@ class RESTCache:
             return func
 
         return decorator
-
-    def _login(self):
-        login_url = urljoin(self.url, "users/login")
-        resp = requests.get(login_url, auth=(self.username, self.password))
-        return resp.json()["token"]
 
     @need_token
     def check_posts(self, submissions: list):
@@ -76,7 +76,6 @@ class RESTCache:
                 }
             )
         posts_dict = {"posts": posts}
-        print("Post dict", posts_dict)
 
         resp = requests.get(contains_url, headers=self.token_header, json=posts_dict)
 
@@ -103,9 +102,7 @@ class RESTCache:
                 "post_id": submission.id,
             }
         }
-        print("CHECK POST DICT", post_dict)
         resp = requests.get(contains_url, headers=self.token_header, json=post_dict)
-        print("RESP", resp.json())
         return resp.json()["exists"]
 
     @need_token
@@ -117,7 +114,6 @@ class RESTCache:
                 "post_id": submission.id,
             }
         }
-        print("ADD POST DICT", post_dict)
         resp = requests.post(add_url, headers=self.token_header, json=post_dict)
         return resp.json()["exists"]
 
