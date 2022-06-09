@@ -81,7 +81,7 @@ def login_user():
 
     user = User.query.filter_by(username=auth.username).first()
 
-    if check_password_hash(user.password, auth.password):
+    if user and check_password_hash(user.password, auth.password):
         token = jwt.encode(
             {
                 "username": user.username,

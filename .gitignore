@@ -4,3 +4,4 @@ cache.txt
 xposter.ini
 config.ini
 database.db
+__pycache__/
