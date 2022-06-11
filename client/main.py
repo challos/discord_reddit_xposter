@@ -259,6 +259,7 @@ if __name__ == "__main__":
     while True:
         posts = temp.get_posts()
         good_submissions = cross_poster.cache.check_posts(posts)
+        print("Checked posts at: {} and found {} good submissions".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), len(good_submissions)))
 
         for submission in good_submissions:
             cross_poster.post_submission(submission)

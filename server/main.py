@@ -22,8 +22,3 @@ with app.app_context():
 
     app.register_blueprint(users_page, url_prefix="/users")
     app.register_blueprint(posts_page, url_prefix="/posts")
-    if __name__ == "__main__":
-        Post.query.delete()
-        User.query.delete()
-        db.create_all()
-        db.session.commit()

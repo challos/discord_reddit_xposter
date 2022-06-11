@@ -3,5 +3,6 @@ praw.ini
 cache.txt
 xposter.ini
 config.ini
+uwsgi.ini
 database.db
 __pycache__/
