@@ -6,3 +6,4 @@ config.ini
 uwsgi.ini
 database.db
 __pycache__/
+client.db

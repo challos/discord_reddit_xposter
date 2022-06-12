@@ -14,6 +14,14 @@ with current_app.app_context():
 
 
 class User(db.Model):
+    """
+    Represents a user in the database.
+
+    Parameters
+    ----------
+    db : Any
+        A database connection.
+    """
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     public_id = db.Column(db.String(255), nullable=False)
@@ -31,6 +39,19 @@ class User(db.Model):
 
 
 def token_required(f):
+    """
+    A decorator for requiring certain actions to use a token.
+
+    Parameters
+    ----------
+    f : callable
+        The action that should require a token to use.
+
+    Returns
+    -------
+    wrapped callable
+        A wrapped version of the callable, that now requires a token.
+    """
     @wraps(f)
     def decorator(*args, **kwargs):
         auth_header = request.headers.get("Authorization")
@@ -54,10 +75,20 @@ def token_required(f):
 
 @users_page.route("/register", methods=["GET", "POST"])
 def signup_user():
+    """
+    Signs a user up. Requires a username (that is not already in the database) and a
+    password in the authorization part of the request.
+
+    Returns
+    -------
+    Response
+        Whether or not the user needs to use authorization, already exists, or registed
+        successfully.
+    """
 
     data = request.authorization
     if not data or "username" not in data or "password" not in data:
-        return make_response("Needs authorization", 400)
+        return make_response("Needs to use authorization!", 400)
     if data and User.query.filter_by(username=data["username"]).first():
         return make_response("User already exists!", 400)
 
@@ -74,6 +105,14 @@ def signup_user():
 
 @users_page.route("/login", methods=["GET", "POST"])
 def login_user():
+    """
+    Logs in a given user.
+
+    Returns
+    -------
+    Response
+        Returns a token if they successfully logged in, or an error if they didn't.
+    """
     auth = request.authorization
 
     if not auth or not auth.username or not auth.password:
@@ -98,14 +137,23 @@ def login_user():
 @users_page.delete("/remove_all")
 @token_required
 def remove_all_users(current_user):
+    """
+    Removes all current users, only available to an admin.
+
+    Parameters
+    ----------
+    current_user : Any
+        The current user.
+
+    Returns
+    -------
+    Response
+        Positive response if they were an admin and tried to delete all users, negative
+        otherwise.
+    """
     if current_user.admin:
         User.query.filter_by(admin=False).delete()
         return make_response("Really hope you meant to do that...", 200)
     else:
         return make_response("You're not an admin, stop trying.", 400)
 
-
-@users_page.route("/author", methods=["POST", "GET"])
-@token_required
-def create_author(current_user):
-    return make_response("wooo", 202)

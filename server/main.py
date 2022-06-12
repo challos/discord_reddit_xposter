@@ -17,8 +17,8 @@ db = SQLAlchemy(app)
 app.config["database"] = db
 
 with app.app_context():
-    from users import users_page, User
-    from posts import posts_page, Post
+    from server.user import users_page, User
+    from server.post import posts_page, Post
 
     app.register_blueprint(users_page, url_prefix="/users")
     app.register_blueprint(posts_page, url_prefix="/posts")
