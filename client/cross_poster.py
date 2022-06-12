@@ -1,4 +1,4 @@
-from cache import Cache
+from caches import Cache
 import requests
 from discord import SyncWebhook
 

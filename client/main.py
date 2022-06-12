@@ -4,7 +4,8 @@ import configparser
 import time
 from datetime import datetime
 
-from cache import Cache
+from caches import Cache
+
 from cross_poster import CrossPoster
 from subreddit_post_gatherer import SubredditPostGatherer
 
