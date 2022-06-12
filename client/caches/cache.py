@@ -37,7 +37,7 @@ class Cache:
             return LocalCache(localcache_db_filename, username)
 
         if username and password and url:
-            return RESTCache(username, password)
+            return RESTCache(username, password, url)
 
         print("Error, check arguments passed to the Cache")
         return None
