@@ -7,7 +7,7 @@ from flask import (
     current_app,
 )
 
-from server.user import token_required, User
+from user import token_required, User
 
 posts_page = Blueprint("posts_page", __name__)
 
