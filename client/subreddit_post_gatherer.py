@@ -67,5 +67,7 @@ class SubredditPostGatherer:
             # just restart the loop, will probably fix itself
         except prawcore.exceptions.ServerError:
             print("Server error...")
+        except prawcore.exceptions.ResponseException:
+            print("Reponse exception...")
 
         return result
