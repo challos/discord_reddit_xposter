@@ -7,7 +7,7 @@ from flask import (
     current_app,
 )
 
-from user import token_required, User
+from .user import token_required, User
 
 posts_page = Blueprint("posts_page", __name__)
 
@@ -45,7 +45,7 @@ class Post(db.Model):
         return json_dict
 
     @classmethod
-    def jsonify_query(cls, query: list["Post"]):
+    def jsonify_query(cls, query: list):
         """
         Jsonify's a query
 
@@ -125,8 +125,8 @@ class Post(db.Model):
     def add_posts(
         cls,
         username: str,
-        posts: list[dict[str, str]],
-    ) -> list[dict]:
+        posts: list,
+    ) -> list:
         """
         Adds multiple posts to the database.
 
@@ -186,7 +186,7 @@ class Post(db.Model):
         }
 
     @classmethod
-    def check_posts(cls, username: str, posts: list[dict[str, str]]) -> list[dict]:
+    def check_posts(cls, username: str, posts: list) -> list:
         """
         Checks whether or not several posts were already in the database.
 

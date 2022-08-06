@@ -2,6 +2,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import configparser
+import os
 
 CONFIG_FILE = "config.ini"
 
@@ -15,10 +16,11 @@ for setting in ["SECRET_KEY", "SQLALCHEMY_DATABASE_URI", "SQLALCHEMY_TRACK_MODIF
 
 db = SQLAlchemy(app)
 app.config["database"] = db
+db.create_all()
 
 with app.app_context():
-    from user import users_page, User
-    from post import posts_page, Post
+    from .user import users_page, User
+    from .post import posts_page, Post
 
     app.register_blueprint(users_page, url_prefix="/users")
     app.register_blueprint(posts_page, url_prefix="/posts")

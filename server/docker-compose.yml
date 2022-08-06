@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  server:
+    build: .
+    volumes:
+      - discord_reddit_xposter_database:/data/
+    ports:
+      - 80:80
+volumes:
+  discord_reddit_xposter_database:
