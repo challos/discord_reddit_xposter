@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  server:
+    build: server/.
+    volumes:
+      - type: bind
+        source: ./server/data
+        target: /data/
+    ports:
+      - 5000:5000
+    networks:
+      - local
+  client:
+    build: client/.
+    volumes:
+      - type: bind
+        source: ./client/config
+        target: /root/.config
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge

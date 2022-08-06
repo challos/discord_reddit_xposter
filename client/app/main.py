@@ -8,12 +8,20 @@ from caches import Cache
 
 from cross_poster import CrossPoster
 from subreddit_post_gatherer import SubredditPostGatherer
+import os
 
-CONFIG_FILE = "xposter.ini"
+CONFIG_FILE = os.path.expanduser("~/.config/config.ini")
 import praw
 
 
 def main():
+    # for root, dirs, files in os.walk(os.path.expanduser("/")):
+    #     print(root)
+    #     print(dirs)
+    #     print(files)
+    #     break
+    # print("EXISTS: ", os.path.exists("/.config/config.ini"))
+    # print("EXPANDED", os.path.expanduser("~/.config/"))
     config = configparser.ConfigParser()
     config.read(CONFIG_FILE)
     webhook_urls = [
