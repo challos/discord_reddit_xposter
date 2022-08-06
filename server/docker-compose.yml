@@ -3,8 +3,8 @@ services:
   server:
     build: .
     volumes:
-      - discord_reddit_xposter_database:/data/
+      - type: bind
+        source: ./data
+        target: /data/
     ports:
       - 80:80
-volumes:
-  discord_reddit_xposter_database:

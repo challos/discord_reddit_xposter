@@ -2,7 +2,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import configparser
-import os
 
 CONFIG_FILE = "config.ini"
 
