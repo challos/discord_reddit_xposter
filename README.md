@@ -1,4 +1,5 @@
 # Discord Reddit Xposter
+![GitHub](https://img.shields.io/github/license/challos/discord_reddit_xposter?style=flat-square)
 
 Dockerized script for crossposting Reddit posts to Discord. Uses PRAW for retrieving posts from Reddit and Discord webhooks with Py-cord to post to Discord.
 
@@ -51,3 +52,4 @@ Tested and works on both WSL2 and Rasbperry Pi 3.
 - [ ] Nicer looking messages when crossposting
 
 # License
+This is available under MIT License
