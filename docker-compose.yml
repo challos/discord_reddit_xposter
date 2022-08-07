@@ -4,8 +4,11 @@ services:
     build: server/.
     volumes:
       - type: bind
-        source: ./server/data
-        target: /data/
+        source: ./server/config/
+        target: /root/.config/
+      - type: bind
+        source: ./server/database_folder/
+        target: /database_folder/
     ports:
       - 5000:5000
     networks:
@@ -14,8 +17,11 @@ services:
     build: client/.
     volumes:
       - type: bind
-        source: ./client/config
-        target: /root/.config
+        source: ./client/config/
+        target: /root/.config/
+      - type: bind
+        source: ./client/database_folder/
+        target: /database_folder/
     networks:
       - local
 

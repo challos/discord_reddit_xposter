@@ -15,13 +15,6 @@ import praw
 
 
 def main():
-    # for root, dirs, files in os.walk(os.path.expanduser("/")):
-    #     print(root)
-    #     print(dirs)
-    #     print(files)
-    #     break
-    # print("EXISTS: ", os.path.exists("/.config/config.ini"))
-    # print("EXPANDED", os.path.expanduser("~/.config/"))
     config = configparser.ConfigParser()
     config.read(CONFIG_FILE)
     webhook_urls = [
@@ -34,8 +27,8 @@ def main():
     cross_poster = CrossPoster(
         cache=cache,
         webhook_urls=webhook_urls,
-        username=config["xposter"]["username"],
-        avatar_url=config["xposter"]["avatar"],
+        username=config["xposter"].get("username", None),
+        avatar_url=config["xposter"].get("avatar", None),
         reddit_config_url=reddit.config.reddit_url,
     )
     subreddit_gatherer = SubredditPostGatherer(

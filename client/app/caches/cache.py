@@ -33,7 +33,7 @@ class Cache:
         password: str = "",
         url: str = "",
     ):
-        if localcache_db_filename:
+        if localcache_db_filename and username:
             return LocalCache(localcache_db_filename, username)
 
         if username and password and url:

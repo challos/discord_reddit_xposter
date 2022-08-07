@@ -22,6 +22,7 @@ class User(db.Model):
     db : Any
         A database connection.
     """
+
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     public_id = db.Column(db.String(255), nullable=False)
@@ -52,6 +53,7 @@ def token_required(f):
     wrapped callable
         A wrapped version of the callable, that now requires a token.
     """
+
     @wraps(f)
     def decorator(*args, **kwargs):
         auth_header = request.headers.get("Authorization")
@@ -85,6 +87,8 @@ def signup_user():
         Whether or not the user needs to use authorization, already exists, or registed
         successfully.
     """
+    if not current_app.config["allow_registration"]:
+        return make_response("account registration is currently disabled", 401)
 
     data = request.authorization
     if not data or "username" not in data or "password" not in data:
@@ -156,4 +160,3 @@ def remove_all_users(current_user):
         return make_response("Really hope you meant to do that...", 200)
     else:
         return make_response("You're not an admin, stop trying.", 400)
-

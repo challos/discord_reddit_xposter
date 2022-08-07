@@ -15,11 +15,15 @@ class LocalCache(BaseCache):
         The meta class for caches.
     """
 
+    DATABASE_FOLDER = "/database_folder/"
+
     def __init__(self, localcache_db_filename: str, username: str):
         self.db_filename = localcache_db_filename
         self.username = username
         self.cache = {}
-        engine = sqlalchemy.create_engine("sqlite:///" + localcache_db_filename)
+        engine = sqlalchemy.create_engine(
+            "sqlite:///" + self.DATABASE_FOLDER + localcache_db_filename
+        )
         base.Base.metadata.create_all(engine, checkfirst=True)
         Session = sessionmaker(bind=engine)
         self.session = Session()
